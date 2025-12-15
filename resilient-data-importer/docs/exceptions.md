@@ -236,10 +236,10 @@ Using pytest to test exception behavior:
 ```python
 def test_missing_file_raises_error(self):
     parser = CSVParser("nonexistent.csv")
-    
+
     with pytest.raises(ImporterError) as exc_info:
         with parser:
             pass
-    
+
     assert "not found" in str(exc_info.value).lower()
 ```

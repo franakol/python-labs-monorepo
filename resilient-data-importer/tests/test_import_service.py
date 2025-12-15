@@ -3,12 +3,10 @@
 import json
 import tempfile
 from pathlib import Path
-from unittest.mock import MagicMock, patch
 
 import pytest
 
 from data_importer.exceptions import ImporterError
-from data_importer.models.user import User
 from data_importer.services.import_service import ImportResult, ImportService
 
 
