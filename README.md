@@ -6,6 +6,7 @@ A collection of Python lab projects demonstrating object-oriented programming, d
 
 | Lab | Description |
 |-----|-------------|
+| [tdd-weather-api](./tdd-weather-api) | TDD-based mock Weather API with SOLID principles |
 | [resilient-data-importer](./resilient-data-importer) | CLI tool for importing CSV data with robust exception handling |
 | [employee-payroll-tracker](./employee-payroll-tracker) | Employee payroll management system |
 | [library-inventory-app](./library-inventory-app) | Library inventory management application |
