@@ -1,0 +1,36 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        files: ^tdd-weather-api/
+      - id: end-of-file-fixer
+        files: ^tdd-weather-api/
+      - id: check-yaml
+        files: ^tdd-weather-api/
+      - id: check-added-large-files
+        files: ^tdd-weather-api/
+      - id: check-merge-conflict
+        files: ^tdd-weather-api/
+
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        language_version: python3.11
+        files: ^tdd-weather-api/
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.0
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        files: ^tdd-weather-api/
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.9.0
+    hooks:
+      - id: mypy
+        additional_dependencies: []
+        args: [--ignore-missing-imports]
+        files: ^tdd-weather-api/
