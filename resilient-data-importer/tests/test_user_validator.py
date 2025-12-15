@@ -82,9 +82,7 @@ class TestUserValidator:
             "has@special",
         ],
     )
-    def test_invalid_user_ids(
-        self, validator: UserValidator, user_id: str
-    ) -> None:
+    def test_invalid_user_ids(self, validator: UserValidator, user_id: str) -> None:
         """Test validation fails for invalid user IDs."""
         user = User(user_id=user_id, name="Test", email="test@example.com")
 
@@ -131,9 +129,7 @@ class TestUserValidator:
         valid_users = validator.validate_batch(sample_users)
         assert len(valid_users) == len(sample_users)
 
-    def test_validate_batch_with_invalid(
-        self, validator: UserValidator
-    ) -> None:
+    def test_validate_batch_with_invalid(self, validator: UserValidator) -> None:
         """Test batch validation filters out invalid users."""
         users = [
             User(user_id="U001", name="Valid", email="valid@example.com"),

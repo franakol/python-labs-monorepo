@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from data_importer.exceptions import DuplicateUserError, StorageError
+from data_importer.exceptions import DuplicateUserError
 from data_importer.models.user import User
 from data_importer.repositories.json_repository import JSONRepository
 
@@ -14,9 +14,7 @@ from data_importer.repositories.json_repository import JSONRepository
 class TestJSONRepository:
     """Tests for JSONRepository class."""
 
-    def test_save_and_load_user(
-        self, temp_json_file: Path, sample_user: User
-    ) -> None:
+    def test_save_and_load_user(self, temp_json_file: Path, sample_user: User) -> None:
         """Test saving and loading a user."""
         with JSONRepository(temp_json_file) as repo:
             repo.save(sample_user)
@@ -68,26 +66,20 @@ class TestJSONRepository:
             assert saved_user is not None
             assert saved_user.email == "updated@example.com"
 
-    def test_exists_method(
-        self, temp_json_file: Path, sample_user: User
-    ) -> None:
+    def test_exists_method(self, temp_json_file: Path, sample_user: User) -> None:
         """Test exists method correctly identifies user presence."""
         with JSONRepository(temp_json_file) as repo:
             assert repo.exists(sample_user.user_id) is False
             repo.save(sample_user)
             assert repo.exists(sample_user.user_id) is True
 
-    def test_get_nonexistent_user_returns_none(
-        self, temp_json_file: Path
-    ) -> None:
+    def test_get_nonexistent_user_returns_none(self, temp_json_file: Path) -> None:
         """Test get returns None for nonexistent user."""
         with JSONRepository(temp_json_file) as repo:
             result = repo.get("NONEXISTENT")
             assert result is None
 
-    def test_count_method(
-        self, temp_json_file: Path, sample_users: list[User]
-    ) -> None:
+    def test_count_method(self, temp_json_file: Path, sample_users: list[User]) -> None:
         """Test count method returns correct number of users."""
         with JSONRepository(temp_json_file) as repo:
             assert repo.count() == 0
@@ -97,9 +89,7 @@ class TestJSONRepository:
 
             assert repo.count() == len(sample_users)
 
-    def test_clear_method(
-        self, temp_json_file: Path, sample_users: list[User]
-    ) -> None:
+    def test_clear_method(self, temp_json_file: Path, sample_users: list[User]) -> None:
         """Test clear method removes all users."""
         with JSONRepository(temp_json_file) as repo:
             for user in sample_users:
@@ -109,9 +99,7 @@ class TestJSONRepository:
             repo.clear()
             assert repo.count() == 0
 
-    def test_save_batch(
-        self, temp_json_file: Path, sample_users: list[User]
-    ) -> None:
+    def test_save_batch(self, temp_json_file: Path, sample_users: list[User]) -> None:
         """Test batch save of multiple users."""
         with JSONRepository(temp_json_file) as repo:
             saved, skipped = repo.save_batch(sample_users)
@@ -159,9 +147,7 @@ class TestJSONRepository:
         # For this test, we check the file was not written
         # (depends on implementation - our impl doesn't persist on error)
 
-    def test_creates_parent_directories(
-        self, sample_user: User
-    ) -> None:
+    def test_creates_parent_directories(self, sample_user: User) -> None:
         """Test that repository creates parent directories if needed."""
         with tempfile.TemporaryDirectory() as tmpdir:
             nested_path = Path(tmpdir) / "nested" / "dirs" / "users.json"
