@@ -147,6 +147,9 @@ pytest
 # Run with coverage
 pytest --cov=data_importer --cov-report=html
 
+# Check for specific coverage threshold (fails if under 90%)
+pytest --cov=data_importer --cov-fail-under=90
+
 # Run specific test file
 pytest tests/test_csv_parser.py
 

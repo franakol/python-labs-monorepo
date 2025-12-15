@@ -23,9 +23,7 @@ class TestCSVParser:
         assert users[0].name == "Alice Johnson"
         assert users[0].email == "alice@example.com"
 
-    def test_context_manager_opens_and_closes_file(
-        self, temp_csv_file: Path
-    ) -> None:
+    def test_context_manager_opens_and_closes_file(self, temp_csv_file: Path) -> None:
         """Test that context manager properly opens and closes file."""
         parser = CSVParser(temp_csv_file)
 
@@ -49,9 +47,7 @@ class TestCSVParser:
 
         assert "not found" in str(exc_info.value).lower()
 
-    def test_parse_without_context_raises_error(
-        self, temp_csv_file: Path
-    ) -> None:
+    def test_parse_without_context_raises_error(self, temp_csv_file: Path) -> None:
         """Test that parsing without context manager raises error."""
         parser = CSVParser(temp_csv_file)
 
