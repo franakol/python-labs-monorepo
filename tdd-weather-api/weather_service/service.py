@@ -4,9 +4,13 @@ This module provides the WeatherService class that returns weather forecasts
 for known cities with predefined data.
 """
 
+import logging
 from datetime import datetime
 
+from weather_service.exceptions import CityNotFoundError, InvalidAPIKeyError
 from weather_service.models import WeatherForecast
+
+logger = logging.getLogger(__name__)
 
 
 class WeatherService:
@@ -61,15 +65,20 @@ class WeatherService:
             },
         }
 
-    def get_forecast(self, city: str) -> WeatherForecast:
+    def get_forecast(self, city: str, api_key: str | None = None) -> WeatherForecast:
         """Get weather forecast for a city.
 
         Args:
             city: The name of the city to get forecast for.
                   City lookup is case-insensitive.
+            api_key: Optional API key. In this mock, 'invalid-key' raises error.
 
         Returns:
             WeatherForecast containing city weather data.
+
+        Raises:
+            CityNotFoundError: If the city is not found in the database.
+            InvalidAPIKeyError: If the provided API key is invalid.
 
         Example:
             >>> service = WeatherService()
@@ -77,8 +86,19 @@ class WeatherService:
             >>> forecast.city
             'London'
         """
+        logger.info(f"Fetching weather forecast for {city}")
+
+        # Validate API key (mock logic)
+        if api_key == "invalid-key":
+            raise InvalidAPIKeyError(f"Invalid API key: {api_key}")
+
         # Normalize city name (case-insensitive lookup)
-        normalized_city = self._normalize_city_name(city)
+        try:
+            normalized_city = self._normalize_city_name(city)
+        except ValueError:
+            logger.error(f"Error fetching forecast for city: {city}")
+            # Re-raise internal ValueError as CityNotFoundError
+            raise CityNotFoundError(city) from None
 
         data = self._weather_data[normalized_city]
 
@@ -99,9 +119,18 @@ class WeatherService:
 
         Returns:
             The canonical city name.
+
+        Raises:
+            CityNotFoundError: If the city is not found.
         """
+        if not city:
+            logger.error(f"Error fetching forecast for city: {city}")
+            raise CityNotFoundError("")
+
         city_lower = city.lower()
         for known_city in self._weather_data:
             if known_city.lower() == city_lower:
                 return known_city
-        return city.title()
+
+        logger.error(f"Error fetching forecast for city: {city}")
+        raise CityNotFoundError(city)
