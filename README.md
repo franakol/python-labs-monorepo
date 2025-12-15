@@ -6,6 +6,7 @@ A collection of Python lab projects demonstrating object-oriented programming, d
 
 | Lab | Description |
 |-----|-------------|
+| [resilient-data-importer](./resilient-data-importer) | CLI tool for importing CSV data with robust exception handling |
 | [employee-payroll-tracker](./employee-payroll-tracker) | Employee payroll management system |
 | [library-inventory-app](./library-inventory-app) | Library inventory management application |
 | [student-course-management-lab](./student-course-management-lab) | Student and course management system |
@@ -35,6 +36,7 @@ pytest
 
 ```
 labs-monorepo/
+├── resilient-data-importer/
 ├── employee-payroll-tracker/
 ├── library-inventory-app/
 ├── student-course-management-lab/
