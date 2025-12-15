@@ -1,5 +1,7 @@
 # Employee Payroll Tracker
 
+> 📦 **Part of [Python Labs Monorepo](../README.md)** | Other Labs: [Library Inventory](../library-inventory-app) • [Student Management](../student-course-management-lab) • [Vehicle Rental](../vehicle-rental-system)
+
 ![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)
 ![Tests](https://img.shields.io/badge/tests-19%20passing-success)
 ![License](https://img.shields.io/badge/license-MIT-green)
@@ -35,9 +37,9 @@ A Python-based Employee Payroll Tracker demonstrating Object-Oriented Programmin
 ### Step 1: Clone and Setup
 
 ```bash
-# Clone the repository
-git clone https://github.com/franakol/employee-payroll-tracker.git
-cd employee-payroll-tracker
+# Clone the monorepo
+git clone https://github.com/franakol/python-labs-monorepo.git
+cd python-labs-monorepo/employee-payroll-tracker
 
 # Create virtual environment
 python3 -m venv .venv

@@ -1,5 +1,7 @@
 # Student Course Management System
 
+> 📦 **Part of [Python Labs Monorepo](../README.md)** | Other Labs: [Employee Payroll](../employee-payroll-tracker) • [Library Inventory](../library-inventory-app) • [Vehicle Rental](../vehicle-rental-system)
+
 ![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)
 ![Tests](https://img.shields.io/badge/tests-181%20passing-brightgreen)
 ![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
@@ -45,9 +47,9 @@ A comprehensive Python-based system for managing student information, course off
 ### Installation
 
 ```bash
-# Clone the repository
-git clone https://github.com/franakol/student-course-management-lab.git
-cd student-course-management-lab
+# Clone the monorepo
+git clone https://github.com/franakol/python-labs-monorepo.git
+cd python-labs-monorepo/student-course-management-lab
 
 # Install dependencies
 poetry install
@@ -251,8 +253,8 @@ This project is created for educational purposes.
 
 ## 🔗 Links
 
-- **Repository**: [https://github.com/franakol/student-course-management-lab](https://github.com/franakol/student-course-management-lab)
-- **Issues**: [https://github.com/franakol/student-course-management-lab/issues](https://github.com/franakol/student-course-management-lab/issues)
+- **Monorepo**: [https://github.com/franakol/python-labs-monorepo](https://github.com/franakol/python-labs-monorepo)
+- **This Lab**: [https://github.com/franakol/python-labs-monorepo/tree/main/student-course-management-lab](https://github.com/franakol/python-labs-monorepo/tree/main/student-course-management-lab)
 
 ## � Troubleshooting
 

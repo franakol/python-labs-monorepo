@@ -1,5 +1,7 @@
 # Library Inventory Application
 
+> 📦 **Part of [Python Labs Monorepo](../README.md)** | Other Labs: [Employee Payroll](../employee-payroll-tracker) • [Student Management](../student-course-management-lab) • [Vehicle Rental](../vehicle-rental-system)
+
 ![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Tests](https://img.shields.io/badge/tests-13%20passing-brightgreen)
@@ -34,8 +36,8 @@ A Python-based Library Inventory Application to manage books, authors, and borro
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/franakol/library-inventory-app.git
-   cd library-inventory-app
+   git clone https://github.com/franakol/python-labs-monorepo.git
+   cd python-labs-monorepo/library-inventory-app
    ```
 
 2. **Set up Virtual Environment**

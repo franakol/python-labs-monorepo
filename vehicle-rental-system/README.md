@@ -1,5 +1,7 @@
 # Vehicle Rental System
 
+> 📦 **Part of [Python Labs Monorepo](../README.md)** | Other Labs: [Employee Payroll](../employee-payroll-tracker) • [Library Inventory](../library-inventory-app) • [Student Management](../student-course-management-lab)
+
 ![Python Version](https://img.shields.io/badge/python-3.11%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
