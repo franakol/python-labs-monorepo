@@ -38,8 +38,8 @@ class TestWeatherServiceDependencyInjection:
         RED Phase: Fails because WeatherService doesn't accept provider param.
         """
         mock_provider = Mock(spec=WeatherProvider)
-        service = WeatherService(provider=mock_provider)  # type: ignore[call-arg]
-        assert service._provider is mock_provider  # type: ignore[attr-defined]
+        service = WeatherService(provider=mock_provider)
+        assert service._provider is mock_provider
 
     def test_weather_service_uses_injected_provider(self) -> None:
         """Test that WeatherService uses the injected provider.
@@ -54,7 +54,7 @@ class TestWeatherServiceDependencyInjection:
             "wind_speed": 5.0,
         }
 
-        service = WeatherService(provider=mock_provider)  # type: ignore[call-arg]
+        service = WeatherService(provider=mock_provider)
         forecast = service.get_forecast("TestCity")
 
         mock_provider.get_weather.assert_called_once_with("TestCity")
@@ -69,4 +69,4 @@ class TestWeatherServiceDependencyInjection:
         from weather_service.providers.mock_provider import MockWeatherProvider
 
         service = WeatherService()
-        assert isinstance(service._provider, MockWeatherProvider)  # type: ignore[attr-defined]
+        assert isinstance(service._provider, MockWeatherProvider)
