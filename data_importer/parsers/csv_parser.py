@@ -2,8 +2,9 @@
 
 import csv
 import logging
+from collections.abc import Iterator
 from pathlib import Path
-from typing import Iterator
+from typing import TextIO
 
 from data_importer.exceptions import FileFormatError, ImporterError
 from data_importer.models.user import User
@@ -38,7 +39,7 @@ class CSVParser:
             file_path: Path to the CSV file to parse.
         """
         self.file_path = Path(file_path)
-        self._file_handle = None
+        self._file_handle: TextIO | None = None
         self._reader = None
 
     def __enter__(self) -> "CSVParser":
@@ -52,7 +53,7 @@ class CSVParser:
         """
         try:
             logger.info(f"Opening CSV file: {self.file_path}")
-            self._file_handle = open(self.file_path, "r", encoding="utf-8", newline="")
+            self._file_handle = open(self.file_path, encoding="utf-8", newline="")
             return self
         except FileNotFoundError as e:
             logger.error(f"File not found: {self.file_path}")
@@ -73,22 +74,18 @@ class CSVParser:
                 details={"path": str(self.file_path)},
             ) from e
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """Exit context manager and close file.
 
         Args:
             exc_type: Exception type if an error occurred.
             exc_val: Exception value if an error occurred.
             exc_tb: Exception traceback if an error occurred.
-
-        Returns:
-            False to propagate any exceptions.
         """
         if self._file_handle:
             logger.info(f"Closing CSV file: {self.file_path}")
             self._file_handle.close()
             self._file_handle = None
-        return False
 
     def _validate_headers(self, headers: list[str]) -> None:
         """Validate that CSV has required headers.

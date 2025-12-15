@@ -122,7 +122,7 @@ def main(argv: list[str] | None = None) -> int:
 
         # Report results
         print("\n" + "=" * 50)
-        print(f"  Import Summary")
+        print("  Import Summary")
         print("=" * 50)
         print(f"  Total rows processed: {result.total_rows}")
         print(f"  Successfully {action}: {result.imported}")
