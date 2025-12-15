@@ -3,22 +3,29 @@ repos:
     rev: v4.5.0
     hooks:
       - id: trailing-whitespace
+        files: ^resilient-data-importer/
       - id: end-of-file-fixer
+        files: ^resilient-data-importer/
       - id: check-yaml
+        files: ^resilient-data-importer/
       - id: check-added-large-files
+        files: ^resilient-data-importer/
       - id: check-merge-conflict
+        files: ^resilient-data-importer/
 
   - repo: https://github.com/psf/black
     rev: 24.3.0
     hooks:
       - id: black
         language_version: python3.11
+        files: ^resilient-data-importer/
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.3.0
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
+        files: ^resilient-data-importer/
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.9.0
@@ -26,3 +33,4 @@ repos:
       - id: mypy
         additional_dependencies: []
         args: [--ignore-missing-imports]
+        files: ^resilient-data-importer/
