@@ -6,6 +6,7 @@ Principle (DIP) from SOLID.
 """
 
 from abc import ABC, abstractmethod
+from typing import Any
 
 
 class WeatherProvider(ABC):
@@ -21,7 +22,7 @@ class WeatherProvider(ABC):
     """
 
     @abstractmethod
-    def get_weather(self, city: str) -> dict:
+    def get_weather(self, city: str) -> dict[str, Any]:
         """Get weather data for a city.
 
         Args:

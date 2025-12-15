@@ -5,6 +5,7 @@ weather data for testing and development purposes.
 """
 
 import logging
+from typing import Any
 
 from weather_service.exceptions import CityNotFoundError
 from weather_service.providers.base import WeatherProvider
@@ -24,7 +25,7 @@ class MockWeatherProvider(WeatherProvider):
 
     def __init__(self) -> None:
         """Initialize with predefined weather data for known cities."""
-        self._weather_data: dict[str, dict] = {
+        self._weather_data: dict[str, dict[str, Any]] = {
             "London": {
                 "temperature": 15.0,
                 "conditions": "Cloudy",
@@ -57,7 +58,7 @@ class MockWeatherProvider(WeatherProvider):
             },
         }
 
-    def get_weather(self, city: str) -> dict:
+    def get_weather(self, city: str) -> dict[str, Any]:
         """Get weather data for a city.
 
         Args:
