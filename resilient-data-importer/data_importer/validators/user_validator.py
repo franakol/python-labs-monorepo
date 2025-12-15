@@ -2,7 +2,6 @@
 
 import logging
 import re
-from typing import List
 
 from data_importer.exceptions import ValidationError
 from data_importer.models.user import User
@@ -27,16 +26,14 @@ class UserValidator:
     """
 
     # Simple but effective email regex
-    EMAIL_PATTERN = re.compile(
-        r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-    )
+    EMAIL_PATTERN = re.compile(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
 
     # User ID pattern: alphanumeric with optional hyphens/underscores
     USER_ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 
     def __init__(self) -> None:
         """Initialize UserValidator."""
-        self._errors: List[ValidationError] = []
+        self._errors: list[ValidationError] = []
 
     def validate(self, user: User) -> bool:
         """Validate a User object.
@@ -152,7 +149,7 @@ class UserValidator:
                 value=email,
             )
 
-    def validate_batch(self, users: List[User]) -> List[User]:
+    def validate_batch(self, users: list[User]) -> list[User]:
         """Validate a batch of users, returning only valid ones.
 
         Args:
@@ -164,7 +161,7 @@ class UserValidator:
         Note:
             Invalid users are logged but not included in the result.
         """
-        valid_users: List[User] = []
+        valid_users: list[User] = []
 
         for user in users:
             try:

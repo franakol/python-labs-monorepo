@@ -3,7 +3,6 @@
 import json
 import logging
 from pathlib import Path
-from typing import Dict, List
 
 from data_importer.exceptions import DuplicateUserError, StorageError
 from data_importer.models.user import User
@@ -35,7 +34,7 @@ class JSONRepository:
             file_path: Path to the JSON storage file.
         """
         self.file_path = Path(file_path)
-        self._users: Dict[str, User] = {}
+        self._users: dict[str, User] = {}
         self._loaded = False
 
     def __enter__(self) -> "JSONRepository":
@@ -47,28 +46,38 @@ class JSONRepository:
         self._load_existing()
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
         """Exit context manager and save data if no error.
 
         Args:
             exc_type: Exception type if an error occurred.
             exc_val: Exception value if an error occurred.
             exc_tb: Exception traceback if an error occurred.
-
-        Returns:
-            False to propagate any exceptions.
         """
         if exc_type is None:
             self._persist()
-        return False
 
     def _load_existing(self) -> None:
         """Load existing users from JSON file if it exists."""
         if self.file_path.exists():
+            # Check if file is empty
+            if self.file_path.stat().st_size == 0:
+                logger.info(f"Empty file found, starting fresh: {self.file_path}")
+                self._loaded = True
+                return
+
             try:
                 logger.info(f"Loading existing data from: {self.file_path}")
-                with open(self.file_path, "r", encoding="utf-8") as f:
-                    data = json.load(f)
+                with open(self.file_path, encoding="utf-8") as f:
+                    content = f.read().strip()
+
+                # Handle empty content
+                if not content:
+                    logger.info("File contains no data, starting fresh")
+                    self._loaded = True
+                    return
+
+                data = json.loads(content)
 
                 # Load users from JSON
                 if isinstance(data, list):
@@ -81,7 +90,7 @@ class JSONRepository:
             except json.JSONDecodeError as e:
                 logger.error(f"Invalid JSON in file: {e}")
                 raise StorageError(
-                    f"Invalid JSON format in storage file",
+                    "Invalid JSON format in storage file",
                     path=str(self.file_path),
                     details={"error": str(e)},
                 ) from e
@@ -115,7 +124,7 @@ class JSONRepository:
         except PermissionError as e:
             logger.error(f"Permission denied writing to: {self.file_path}")
             raise StorageError(
-                f"Permission denied writing to file",
+                "Permission denied writing to file",
                 path=str(self.file_path),
             ) from e
         except Exception as e:
@@ -171,7 +180,7 @@ class JSONRepository:
         logger.debug(f"Saved user: {user.user_id}")
 
     def save_batch(
-        self, users: List[User], skip_duplicates: bool = False
+        self, users: list[User], skip_duplicates: bool = False
     ) -> tuple[int, int]:
         """Save multiple users to the repository.
 
@@ -202,7 +211,7 @@ class JSONRepository:
         logger.info(f"Batch save complete: {saved} saved, {skipped} skipped")
         return saved, skipped
 
-    def load_all(self) -> List[User]:
+    def load_all(self) -> list[User]:
         """Load all users from the repository.
 
         Returns:

@@ -3,7 +3,6 @@
 import logging
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List
 
 from data_importer.exceptions import (
     DuplicateUserError,
@@ -33,7 +32,7 @@ class ImportResult:
     total_rows: int
     imported: int
     skipped: int
-    errors: List[str]
+    errors: list[str]
 
     @property
     def success(self) -> bool:
@@ -109,11 +108,11 @@ class ImportService:
         total_rows = 0
         imported = 0
         skipped = 0
-        errors: List[str] = []
+        errors: list[str] = []
 
         try:
             # Parse CSV and collect valid users
-            valid_users: List[User] = []
+            valid_users: list[User] = []
 
             with CSVParser(self.input_path) as parser:
                 for user in parser.parse():
@@ -146,7 +145,7 @@ class ImportService:
                         repo.save(user)
                         imported += 1
                         logger.info(f"Imported user: {user.user_id} ({user.name})")
-                    except DuplicateUserError as e:
+                    except DuplicateUserError:
                         error_msg = f"Duplicate user: {user.user_id}"
                         logger.warning(error_msg)
                         errors.append(error_msg)
@@ -187,7 +186,7 @@ class ImportService:
         total_rows = 0
         valid = 0
         invalid = 0
-        errors: List[str] = []
+        errors: list[str] = []
 
         try:
             with CSVParser(self.input_path) as parser:
