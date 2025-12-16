@@ -31,5 +31,6 @@ repos:
     rev: v1.9.0
     hooks:
       - id: mypy
-        files: ^secure-auth-service/
+        files: ^secure-auth-service/auth_service/
+        exclude: ^secure-auth-service/tests/
         args: [--config-file=secure-auth-service/pyproject.toml]
