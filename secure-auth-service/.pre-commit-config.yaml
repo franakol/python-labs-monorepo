@@ -1,0 +1,35 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        files: ^secure-auth-service/
+      - id: end-of-file-fixer
+        files: ^secure-auth-service/
+      - id: check-yaml
+        files: ^secure-auth-service/
+      - id: check-added-large-files
+        files: ^secure-auth-service/
+      - id: check-merge-conflict
+        files: ^secure-auth-service/
+
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        files: ^secure-auth-service/
+        language_version: python3.11
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.4
+    hooks:
+      - id: ruff
+        files: ^secure-auth-service/
+        args: [--fix]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.9.0
+    hooks:
+      - id: mypy
+        files: ^secure-auth-service/
+        args: [--config-file=secure-auth-service/pyproject.toml]
