@@ -5,7 +5,12 @@ This module contains the UserService class for user registration and login.
 
 import logging
 
-from auth_service.exceptions import UserAlreadyExistsError, WeakPasswordError
+from auth_service.exceptions import (
+    InvalidPasswordError,
+    UserAlreadyExistsError,
+    UserNotFoundError,
+    WeakPasswordError,
+)
 from auth_service.interfaces.hasher import PasswordHasher
 from auth_service.interfaces.repository import UserRepository
 from auth_service.models import User
@@ -85,3 +90,33 @@ class UserService:
                 f"Password must be at least {MIN_PASSWORD_LENGTH} characters "
                 f"(minimum length requirement)"
             )
+
+    def login(self, username: str, password: str) -> User:
+        """Authenticate a user with credentials.
+
+        Args:
+            username: The username to authenticate.
+            password: The plaintext password to verify.
+
+        Returns:
+            The authenticated User.
+
+        Raises:
+            UserNotFoundError: If the username doesn't exist.
+            InvalidPasswordError: If the password is incorrect.
+        """
+        logger.info(f"Login attempt for user: {username}")
+
+        # Find user
+        user = self._repository.find_by_username(username)
+        if user is None:
+            logger.warning(f"Login failed - user not found: {username}")
+            raise UserNotFoundError(username)
+
+        # Verify password
+        if not self._hasher.verify(password, user.password_hash):
+            logger.warning(f"Login failed - invalid password for: {username}")
+            raise InvalidPasswordError()
+
+        logger.info(f"User logged in successfully: {username}")
+        return user
