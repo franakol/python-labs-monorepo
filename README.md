@@ -6,6 +6,7 @@ A collection of Python lab projects demonstrating object-oriented programming, d
 
 | Lab | Description | Tests |
 |-----|-------------|-------|
+| [git-config-manager](./git-config-manager) | Git-powered configuration management CLI with TDD | 86 |
 | [data-processing-pipeline](./data-processing-pipeline) | Multi-stage data processing with TDD, testcontainers, and 96% coverage | 63 |
 | [secure-auth-service](./secure-auth-service) | Secure User Authentication Module with TDD and SOLID principles | ✓ |
 | [tdd-weather-api](./tdd-weather-api) | TDD-based mock Weather API with SOLID principles | ✓ |
@@ -39,6 +40,7 @@ pytest
 
 ```
 labs-monorepo/
+├── git-config-manager/          # Git-powered config management CLI
 ├── data-processing-pipeline/    # Multi-stage data pipeline (TDD + testcontainers)
 ├── secure-auth-service/         # Authentication with SOLID principles
 ├── tdd-weather-api/             # Weather API with TDD
