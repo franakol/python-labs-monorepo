@@ -1,0 +1,38 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        files: ^git-config-manager/
+      - id: end-of-file-fixer
+        files: ^git-config-manager/
+      - id: check-yaml
+        files: ^git-config-manager/
+      - id: check-added-large-files
+        files: ^git-config-manager/
+      - id: check-merge-conflict
+        files: ^git-config-manager/
+
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        files: ^git-config-manager/
+        language_version: python3.11
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.9
+    hooks:
+      - id: ruff
+        files: ^git-config-manager/
+        args: [--fix]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        files: ^git-config-manager/
+        additional_dependencies:
+          - types-PyYAML
+          - click
+          - gitpython
