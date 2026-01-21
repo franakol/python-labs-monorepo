@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Output files
+output/*.json
+output/*.csv
+!output/.gitkeep
+
+# pytest
+.pytest_cache/
+.coverage
+
+# OS
+.DS_Store
