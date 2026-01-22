@@ -22,3 +22,10 @@ urlpatterns = [
     # Shortener app URLs (includes API and redirect)
     path('', include('shortener.urls')),
 ]
+
+# Serve static files in development/debug mode
+from django.conf import settings
+from django.conf.urls.static import static
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

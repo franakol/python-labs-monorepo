@@ -18,6 +18,33 @@ from .serializers import (
 )
 
 
+class RootView(APIView):
+    """Root API view with welcome message and links."""
+    
+    @extend_schema(
+        summary="API Root",
+        description="Get welcome message and API endpoints",
+        responses={200: {"type": "object"}}
+    )
+    def get(self, request):
+        """Root endpoint with API info."""
+        base_url = request.build_absolute_uri('/')
+        return Response({
+            "message": "Welcome to URL Shortener API",
+            "version": "1.0.0",
+            "endpoints": {
+                "health": f"{base_url}health/",
+                "shorten": f"{base_url}api/shorten/",
+                "stats": f"{base_url}api/stats/<short_code>/",
+                "documentation": {
+                    "swagger": f"{base_url}api/docs/",
+                    "redoc": f"{base_url}api/redoc/",
+                    "schema": f"{base_url}api/schema/"
+                }
+            }
+        }, status=status.HTTP_200_OK)
+
+
 class HealthCheckView(APIView):
     """Health check endpoint."""
     
