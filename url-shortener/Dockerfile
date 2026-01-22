@@ -34,8 +34,17 @@ ENV PATH=/root/.local/bin:$PATH
 # Copy project files
 COPY . .
 
-# Create non-root user
-RUN useradd -m -u 1000 django && chown -R django:django /app
+# Create non-root user before copying dependencies to get correct permissions
+RUN useradd -m -u 1000 django
+
+# Copy Python dependencies from builder and set correct ownership
+COPY --from=builder --chown=django:django /root/.local /home/django/.local
+
+# Make sure scripts in .local are usable
+ENV PATH=/home/django/.local/bin:$PATH
+
+# Set ownership
+RUN chown -R django:django /app
 USER django
 
 # Expose port
