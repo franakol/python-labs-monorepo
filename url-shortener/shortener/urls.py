@@ -3,11 +3,14 @@ URL routing for shortener app
 """
 
 from django.urls import path
-from .views import ShortenURLView, RedirectView, URLStatsView, HealthCheckView
+from .views import RootView, ShortenURLView, RedirectView, URLStatsView, HealthCheckView
 
 app_name = 'shortener'
 
 urlpatterns = [
+    # Root endpoint
+    path('', RootView.as_view(), name='root'),
+    
     # API endpoints
     path('api/shorten/', ShortenURLView.as_view(), name='shorten'),
     path('api/stats/<str:short_code>/', URLStatsView.as_view(), name='stats'),

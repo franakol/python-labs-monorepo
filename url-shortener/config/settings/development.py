@@ -6,11 +6,6 @@ from .base import *
 
 DEBUG = True
 
-# Additional development settings
-INSTALLED_APPS += [
-    'django.contrib.staticfiles',
-]
-
 # Allow all hosts in development
 ALLOWED_HOSTS = ['*']
 
