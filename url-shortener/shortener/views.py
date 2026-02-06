@@ -22,9 +22,14 @@ class RootView(APIView):
     """Root API view with welcome message and links."""
     
     @extend_schema(
-        summary="API Root",
-        description="Get welcome message and API endpoints",
-        responses={200: {"type": "object"}}
+        summary="API Root - Welcome Page",
+        description="""Returns a welcome message with links to all available API endpoints.
+        
+        This is the landing page for the URL Shortener API. Use the returned links
+        to navigate to the Swagger documentation, create short URLs, or access other endpoints.
+        """,
+        responses={200: {"type": "object"}},
+        tags=['General']
     )
     def get(self, request):
         """Root endpoint with API info."""
@@ -50,8 +55,20 @@ class HealthCheckView(APIView):
     
     @extend_schema(
         summary="Health Check",
-        description="Check if the service is running",
-        responses={200: {"type": "object", "properties": {"status": {"type": "string"}}}}
+        description="""Verify that the URL Shortener service is up and running.
+        
+        Returns a simple health status. Use this endpoint for:
+        - Load balancer health checks
+        - Monitoring and uptime tracking
+        - Docker container health verification
+        
+        **Example Response:**
+        ```json
+        {"status": "healthy"}
+        ```
+        """,
+        responses={200: {"type": "object", "properties": {"status": {"type": "string"}}}},
+        tags=['General']
     )
     def get(self, request):
         """Health check endpoint."""
@@ -63,9 +80,37 @@ class ShortenURLView(APIView):
     
     @extend_schema(
         summary="Create Short URL",
-        description="Create a shortened URL for a given long URL",
+        description="""Generate a shortened URL from a long URL.
+        
+        **How it works:**
+        1. Send a POST request with your long URL in the `original_url` field
+        2. The API generates a random 6-character short code (or uses your custom code)
+        3. Returns the short code and complete short URL you can share
+        
+        **Smart Deduplication:**
+        If you shorten the same URL twice, you'll get the same short code back.
+        The `created` field tells you if it's a new short URL or an existing one.
+        
+        **Example Request:**
+        ```json
+        {
+          "original_url": "https://www.example.com/very/long/path/to/page"
+        }
+        ```
+        
+        **Example Response:**
+        ```json
+        {
+          "short_code": "aB3xYz",
+          "original_url": "https://www.example.com/very/long/path/to/page",
+          "short_url": "http://localhost:8000/aB3xYz",
+          "created": true
+        }
+        ```
+        """,
         request=URLShortenSerializer,
-        responses={201: URLResponseSerializer, 400: {"type": "object"}}
+        responses={201: URLResponseSerializer, 400: {"type": "object"}},
+        tags=['URL Shortening']
     )
     def post(self, request):
         """Create a new short URL."""
@@ -108,19 +153,33 @@ class RedirectView(APIView):
     
     @extend_schema(
         summary="Redirect to Original URL",
-        description="Redirect to the original URL using the short code",
+        description="""Automatically redirect to the original long URL.
+        
+        **How to use:**
+        1. Visit the short URL in your browser: `http://localhost:8000/<short_code>`
+        2. You'll be instantly redirected (HTTP 302) to the original URL
+        3. Each visit increments the click counter
+        
+        **Example:**
+        - Short URL: `http://localhost:8000/aB3xYz`
+        - Redirects to: `https://www.example.com/very/long/path/to/page`
+        
+        **Note:** This endpoint doesn't return JSON - it performs an HTTP redirect.
+        Perfect for sharing links in emails, social media, or QR codes!
+        """,
         parameters=[
             OpenApiParameter(
                 name='short_code',
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.PATH,
-                description='The short code to redirect'
+                description='The 6-character short code (e.g., "aB3xYz")'
             )
         ],
         responses={
-            302: {"description": "Redirect to original URL"},
+            302: {"description": "Successfully redirected to original URL"},
             404: {"type": "object", "properties": {"error": {"type": "string"}}}
-        }
+        },
+        tags=['URL Shortening']
     )
     def get(self, request, short_code):
         """Redirect to the original URL."""
@@ -144,16 +203,39 @@ class URLStatsView(APIView):
     
     @extend_schema(
         summary="Get URL Statistics",
-        description="Get statistics for a shortened URL including click count",
+        description="""Retrieve analytics and statistics for a shortened URL.
+        
+        **What you get:**
+        - Original long URL
+        - Short code
+        - Complete short URL
+        - Total click count (number of times the short URL has been accessed)
+        
+        **Example Response:**
+        ```json
+        {
+          "short_code": "aB3xYz",
+          "original_url": "https://www.example.com/page",
+          "short_url": "http://localhost:8000/aB3xYz",
+          "clicks": 42
+        }
+        ```
+        
+        **Use cases:**
+        - Track link popularity
+        - Measure campaign effectiveness
+        - Monitor traffic sources
+        """,
         parameters=[
             OpenApiParameter(
                 name='short_code',
                 type=OpenApiTypes.STR,
                 location=OpenApiParameter.PATH,
-                description='The short code to get stats for'
+                description='The short code to retrieve statistics for'
             )
         ],
-        responses={200: URLStatsSerializer, 404: {"type": "object"}}
+        responses={200: URLStatsSerializer, 404: {"type": "object"}},
+        tags=['Analytics']
     )
     def get(self, request, short_code):
         """Get statistics for a short code."""
