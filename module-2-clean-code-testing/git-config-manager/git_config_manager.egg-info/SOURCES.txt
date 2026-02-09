@@ -1,0 +1,14 @@
+pyproject.toml
+git_config_manager.egg-info/PKG-INFO
+git_config_manager.egg-info/SOURCES.txt
+git_config_manager.egg-info/dependency_links.txt
+git_config_manager.egg-info/entry_points.txt
+git_config_manager.egg-info/requires.txt
+git_config_manager.egg-info/top_level.txt
+gitconfig/__init__.py
+gitconfig/exceptions.py
+gitconfig/models.py
+gitconfig/core/__init__.py
+gitconfig/interfaces/__init__.py
+gitconfig/interfaces/parser.py
+gitconfig/interfaces/repository.py
