@@ -13,13 +13,14 @@ class URLShortenSerializer(serializers.Serializer):
     original_url = serializers.URLField(
         max_length=2048,
         required=True,
-        help_text="The long URL to shorten"
+        help_text="The full URL you want to shorten (e.g., https://example.com/very/long/path)"
     )
     custom_code = serializers.CharField(
-        max_length=10,
-        required=False,
-        allow_blank=True,
-        help_text="Optional custom short code"
+        min_length=6, 
+        max_length=6, 
+        required=False, 
+        write_only=True,
+        help_text="Optional custom 6-character code (alphanumeric)"
     )
     
     def validate_original_url(self, value):
@@ -43,9 +44,9 @@ class URLShortenSerializer(serializers.Serializer):
     def validate_custom_code(self, value):
         """Validate custom short code."""
         if value:
-            if len(value) < 3:
+            if len(value) < 6: # Updated validation to match new min_length
                 raise serializers.ValidationError(
-                    "Custom code must be at least 3 characters"
+                    "Custom code must be at least 6 characters"
                 )
             if not value.isalnum():
                 raise serializers.ValidationError(
@@ -55,12 +56,22 @@ class URLShortenSerializer(serializers.Serializer):
 
 
 class URLResponseSerializer(serializers.Serializer):
-    """Serializer for short URL response."""
+    """Response after creating a short URL."""
     
-    short_code = serializers.CharField(read_only=True)
-    original_url = serializers.URLField(read_only=True)
-    short_url = serializers.SerializerMethodField()
-    created = serializers.BooleanField(read_only=True)
+    short_code = serializers.CharField(
+        min_length=6, 
+        max_length=6, 
+        read_only=True,
+        help_text="The generated 6-character short code"
+    )
+    original_url = serializers.URLField(help_text="The original long URL to be shortened")
+    short_url = serializers.SerializerMethodField(help_text="The full shortened URL")
+    created_at = serializers.DateTimeField(read_only=True, help_text="When the URL was shortened")
+    clicks = serializers.IntegerField(read_only=True, help_text="Number of times the short URL has been accessed")
+    created = serializers.BooleanField(
+        read_only=True,
+        help_text="True if newly created, False if URL was already shortened before"
+    )
     
     def get_short_url(self, obj):
         """Generate the full short URL."""
@@ -71,12 +82,23 @@ class URLResponseSerializer(serializers.Serializer):
 
 
 class URLStatsSerializer(serializers.Serializer):
-    """Serializer for URL statistics."""
+    """Statistics for a shortened URL."""
     
-    short_code = serializers.CharField(read_only=True)
-    original_url = serializers.URLField(read_only=True)
-    clicks = serializers.IntegerField(read_only=True)
-    short_url = serializers.SerializerMethodField()
+    short_code = serializers.CharField(
+        read_only=True,
+        help_text="The short code identifier"
+    )
+    original_url = serializers.URLField(
+        read_only=True,
+        help_text="The original long URL"
+    )
+    clicks = serializers.IntegerField(
+        read_only=True,
+        help_text="Total number of times this short URL has been accessed"
+    )
+    short_url = serializers.SerializerMethodField(
+        help_text="The complete short URL"
+    )
     
     def get_short_url(self, obj):
         """Generate the full short URL."""

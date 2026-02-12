@@ -1,0 +1,4 @@
+[submodule "module-1-python-fundamentals/employee-payroll-tracker"]
+	path = module-1-python-fundamentals/employee-payroll-tracker
+	url = git@github.com:franakol/employee-payroll-tracker.git
+	branch = main

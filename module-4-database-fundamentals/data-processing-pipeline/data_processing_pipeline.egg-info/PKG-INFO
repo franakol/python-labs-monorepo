@@ -1,0 +1,19 @@
+Metadata-Version: 2.4
+Name: data-processing-pipeline
+Version: 0.1.0
+Summary: Multi-stage data processing pipeline with SOLID principles and comprehensive testing
+Author-email: Developer <dev@example.com>
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: psycopg2-binary>=2.9.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: pytest-mock>=3.12.0; extra == "dev"
+Requires-Dist: coverage[toml]>=7.0.0; extra == "dev"
+Requires-Dist: black>=24.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.8.0; extra == "dev"
+Requires-Dist: pre-commit>=3.6.0; extra == "dev"
+Requires-Dist: testcontainers[postgres]>=3.7.0; extra == "dev"

@@ -1,0 +1,86 @@
+Metadata-Version: 2.4
+Name: secure-auth-service
+Version: 0.1.0
+Summary: Secure User Authentication Service Module with TDD
+Author-email: Developer <dev@example.com>
+License: MIT
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: bcrypt>=4.0.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+Requires-Dist: pytest-cov>=4.0.0; extra == "dev"
+Requires-Dist: pytest-mock>=3.12.0; extra == "dev"
+Requires-Dist: coverage[toml]>=7.0.0; extra == "dev"
+Requires-Dist: black>=24.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.8.0; extra == "dev"
+Requires-Dist: pre-commit>=3.6.0; extra == "dev"
+
+# Secure Auth Service
+
+> Part of the [Python Labs Monorepo](https://github.com/franakol/python-labs-monorepo)
+
+A secure, reusable User Authentication Service Module built with strict TDD and SOLID principles.
+
+## 🎯 Lab Objectives
+
+- **TDD Workflow**: Red-Green-Refactor cycle with 100% test coverage
+- **SOLID Principles**: Dependency injection with abstract interfaces
+- **Security**: Bcrypt password hashing, password policies
+- **Code Quality**: Type hints, Black, Ruff, mypy strict mode
+
+## ⚡ Quick Start
+
+```bash
+cd secure-auth-service
+python -m venv venv
+source venv/bin/activate
+pip install -e ".[dev]"
+pre-commit install
+```
+
+## 📁 Architecture
+
+```
+auth_service/
+├── models.py                 # User dataclass
+├── exceptions.py             # Custom exceptions
+├── service.py                # UserService (entry point)
+├── interfaces/
+│   ├── repository.py         # UserRepository ABC
+│   └── hasher.py             # PasswordHasher ABC
+└── implementations/
+    ├── memory_repository.py  # InMemoryUserRepository
+    └── bcrypt_hasher.py      # BcryptPasswordHasher
+```
+
+## 🔐 Usage
+
+```python
+from auth_service.service import UserService
+from auth_service.implementations.memory_repository import InMemoryUserRepository
+from auth_service.implementations.bcrypt_hasher import BcryptPasswordHasher
+
+# Create service with dependency injection
+repo = InMemoryUserRepository()
+hasher = BcryptPasswordHasher()
+service = UserService(repository=repo, hasher=hasher)
+
+# Register a user
+user = service.register("john_doe", "SecurePass123!")
+
+# Login
+authenticated_user = service.login("john_doe", "SecurePass123!")
+```
+
+## 🧪 Testing
+
+```bash
+pytest -v
+pytest --cov=auth_service --cov-report=term-missing --cov-fail-under=100
+```
+
+## 📝 License
+
+MIT License
